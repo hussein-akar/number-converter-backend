@@ -1,6 +1,7 @@
 package com.project.numberconverterbackend.factory;
 
 import com.project.numberconverterbackend.enums.NumberType;
+import com.project.numberconverterbackend.exceptions.ConversionNotSupportedException;
 import com.project.numberconverterbackend.service.converters.NumberConverter;
 import com.project.numberconverterbackend.service.converters.fromDecimal.ToRomanNumberConverter;
 import com.project.numberconverterbackend.service.converters.toDecimal.FromBinaryNumberConverter;
@@ -23,7 +24,7 @@ public class NumberConverterFactory {
             case BINARY -> {
                 return applicationContext.getBean(FromBinaryNumberConverter.class);
             }
-            default -> throw new RuntimeException("Not Supported");
+            default -> throw new ConversionNotSupportedException(type, true);
         }
     }
 
@@ -32,7 +33,7 @@ public class NumberConverterFactory {
             case ROMAN -> {
                 return applicationContext.getBean(ToRomanNumberConverter.class);
             }
-            default -> throw new RuntimeException("Not Supported");
+            default -> throw new ConversionNotSupportedException(type, false);
         }
     }
 }

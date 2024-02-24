@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 import com.project.numberconverterbackend.enums.NumberType;
+import com.project.numberconverterbackend.exceptions.ConversionNotSupportedException;
 import com.project.numberconverterbackend.service.converters.NumberConverter;
 import com.project.numberconverterbackend.service.converters.fromDecimal.ToRomanNumberConverter;
 import com.project.numberconverterbackend.service.converters.toDecimal.FromBinaryNumberConverter;
@@ -26,7 +27,9 @@ class NumberConverterFactoryTest {
         void shouldThrowExceptionWhenTypeIsNotSupported() {
             Throwable throwable = catchThrowable(() -> underTest.createFromTypeToDecimalConverter(NumberType.ROMAN));
 
-            assertThat(throwable).isInstanceOf(RuntimeException.class);
+            assertThat(throwable)
+                .isInstanceOf(ConversionNotSupportedException.class)
+                .hasMessage("Converting %s %s not supported at the moment!", "from", NumberType.ROMAN);
         }
 
         @Test
@@ -51,7 +54,9 @@ class NumberConverterFactoryTest {
         void shouldThrowExceptionWhenTypeIsNotSupported() {
             Throwable throwable = catchThrowable(() -> underTest.createFromDecimalToTypeConverter(NumberType.DECIMAL));
 
-            assertThat(throwable).isInstanceOf(RuntimeException.class);
+            assertThat(throwable)
+                .isInstanceOf(ConversionNotSupportedException.class)
+                .hasMessage("Converting %s %s not supported at the moment!", "to", NumberType.DECIMAL);
         }
 
         @Test
