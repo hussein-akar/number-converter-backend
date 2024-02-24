@@ -1,13 +1,14 @@
 package com.project.numberconverterbackend.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.project.numberconverterbackend.enums.NumberType;
 import com.project.numberconverterbackend.service.NumberConverterService;
 import lombok.SneakyThrows;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -17,7 +18,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 @WebMvcTest(NumberConverterController.class)
 class NumberConverterControllerTest {
@@ -88,7 +88,7 @@ class NumberConverterControllerTest {
         when(numberConverterService.convert(NumberType.DECIMAL, NumberType.ROMAN, "4"))
             .thenReturn("IV");
 
-        MvcResult mvcResult = this.mockMvc.perform(post(URL.concat("/convert"))
+        this.mockMvc.perform(post(URL.concat("/convert"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     """
@@ -100,9 +100,6 @@ class NumberConverterControllerTest {
                         """
                 ))
             .andExpect(status().isOk())
-            .andReturn();
-
-        String expected = "IV";
-        assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expected);
+            .andExpect(jsonPath("$.value", Matchers.equalTo("IV")));
     }
 }
