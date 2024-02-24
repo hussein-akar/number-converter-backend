@@ -1,6 +1,7 @@
 package com.project.numberconverterbackend.controller;
 
 import com.project.numberconverterbackend.payload.NumberConverterPayload;
+import com.project.numberconverterbackend.response.NumberConversionResponse;
 import com.project.numberconverterbackend.service.NumberConverterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class NumberConverterController {
     private final NumberConverterService numberConverterService;
 
     @PostMapping("/convert")
-    public ResponseEntity<String> convert(@RequestBody @Valid NumberConverterPayload payload) {
+    public ResponseEntity<NumberConversionResponse> convert(@RequestBody @Valid NumberConverterPayload payload) {
         String result = numberConverterService.convert(payload.getFromType(), payload.getToType(), payload.getValue());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(new NumberConversionResponse(result));
     }
 }
