@@ -6,4 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FromDecimalStringNumberConverter implements NumberConverter<String, Long> {
 
+    @Override
+    public Long convert(String value) {
+        return Long.valueOf(value);
+    }
 }
