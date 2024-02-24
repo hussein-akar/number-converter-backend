@@ -3,9 +3,7 @@ package com.project.numberconverterbackend.service.converters.fromDecimal;
 import com.project.numberconverterbackend.service.converters.NumberConverter;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ToRomanNumberConverter implements NumberConverter<Long, String> {
 
     private static final Map<Integer, String> romanNumeralByDecimalMap = new LinkedHashMap<>();

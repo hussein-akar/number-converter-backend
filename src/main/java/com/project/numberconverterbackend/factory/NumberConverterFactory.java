@@ -7,22 +7,19 @@ import com.project.numberconverterbackend.service.converters.fromDecimal.ToRoman
 import com.project.numberconverterbackend.service.converters.toDecimal.FromBinaryNumberConverter;
 import com.project.numberconverterbackend.service.converters.toDecimal.FromDecimalStringNumberConverter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class NumberConverterFactory {
 
-    private final ApplicationContext applicationContext;
-
     public NumberConverter<String, Long> createFromTypeToDecimalConverter(NumberType type) {
         switch (type) {
             case DECIMAL -> {
-                return applicationContext.getBean(FromDecimalStringNumberConverter.class);
+                return new FromDecimalStringNumberConverter();
             }
             case BINARY -> {
-                return applicationContext.getBean(FromBinaryNumberConverter.class);
+                return new FromBinaryNumberConverter();
             }
             default -> throw new ConversionNotSupportedException(type, true);
         }
@@ -31,7 +28,7 @@ public class NumberConverterFactory {
     public NumberConverter<Long, String> createFromDecimalToTypeConverter(NumberType type) {
         switch (type) {
             case ROMAN -> {
-                return applicationContext.getBean(ToRomanNumberConverter.class);
+                return new ToRomanNumberConverter();
             }
             default -> throw new ConversionNotSupportedException(type, false);
         }
