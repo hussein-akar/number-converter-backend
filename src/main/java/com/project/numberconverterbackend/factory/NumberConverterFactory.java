@@ -16,7 +16,7 @@ public class NumberConverterFactory {
 
     private final ApplicationContext applicationContext;
 
-    public NumberConverter<?, ?> createFromTypeToDecimalConverter(NumberType type) {
+    public NumberConverter<String, Long> createFromTypeToDecimalConverter(NumberType type) {
         switch (type) {
             case DECIMAL -> {
                 return applicationContext.getBean(FromDecimalStringNumberConverter.class);
@@ -28,7 +28,7 @@ public class NumberConverterFactory {
         }
     }
 
-    public NumberConverter<?, ?> createFromDecimalToTypeConverter(NumberType type) {
+    public NumberConverter<Long, String> createFromDecimalToTypeConverter(NumberType type) {
         switch (type) {
             case ROMAN -> {
                 return applicationContext.getBean(ToRomanNumberConverter.class);
