@@ -8,6 +8,6 @@ public class FromBinaryNumberConverter implements NumberConverter<String, Long> 
 
     @Override
     public Long convert(String value) {
-        return null;
+        return Long.parseLong(value, 2);
     }
 }
