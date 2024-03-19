@@ -1,10 +1,12 @@
-package com.project.numberconverterbackend.service.converters.fromDecimal;
+package com.project.numberconverterbackend.service.toType.impl;
 
-import com.project.numberconverterbackend.service.converters.NumberConverter;
+import com.project.numberconverterbackend.service.toType.ToTypeNumberConverter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.springframework.stereotype.Service;
 
-public class ToRomanNumberConverter implements NumberConverter<Long, String> {
+@Service
+public class ToRomanNumberConverter implements ToTypeNumberConverter {
 
     private static final Map<Integer, String> romanNumeralByDecimalMap = new LinkedHashMap<>();
 
@@ -26,7 +28,7 @@ public class ToRomanNumberConverter implements NumberConverter<Long, String> {
 
     @Override
     public String convert(Long value) {
-        if(value == null) {
+        if (value == null) {
             throw new NumberFormatException();
         }
 
@@ -42,5 +44,10 @@ public class ToRomanNumberConverter implements NumberConverter<Long, String> {
         }
 
         return roman.toString();
+    }
+
+    @Override
+    public String supportedType() {
+        return "ROMAN";
     }
 }

@@ -1,6 +1,5 @@
 package com.project.numberconverterbackend.payload;
 
-import com.project.numberconverterbackend.enums.NumberType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,10 +8,10 @@ import lombok.Getter;
 public class NumberConverterPayload {
 
     @NotNull
-    private NumberType fromType;
+    private String fromType;
 
     @NotNull
-    private NumberType toType;
+    private String toType;
 
     @NotBlank
     private String value;

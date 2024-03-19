@@ -1,9 +1,8 @@
 package com.project.numberconverterbackend.service.impl;
 
-import com.project.numberconverterbackend.enums.NumberType;
-import com.project.numberconverterbackend.factory.NumberConverterFactory;
+import com.project.numberconverterbackend.factory.FromTypeNumberConverterFactory;
+import com.project.numberconverterbackend.factory.ToTypeNumberConverterFactory;
 import com.project.numberconverterbackend.service.NumberConverterService;
-import com.project.numberconverterbackend.service.converters.NumberConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +10,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NumberConverterServiceImpl implements NumberConverterService {
 
-    private final NumberConverterFactory numberConverterFactory;
+    private final FromTypeNumberConverterFactory fromTypeNumberConverterFactory;
+    private final ToTypeNumberConverterFactory toTypeNumberConverterFactory;
 
     @Override
-    public String convert(NumberType fromType, NumberType toType, String value) {
-        NumberConverter<String, Long> fromTypeToDecimalConverter = numberConverterFactory.createFromTypeToDecimalConverter(fromType);
-        NumberConverter<Long, String> fromDecimalToTypeConverter = numberConverterFactory.createFromDecimalToTypeConverter(toType);
-
-        Long decimalValue = fromTypeToDecimalConverter.convert(value);
-        return fromDecimalToTypeConverter.convert(decimalValue);
+    public String convert(String fromType, String toType, String value) {
+        Long decimalValue = fromTypeNumberConverterFactory.create(fromType).convert(value);
+        return toTypeNumberConverterFactory.create(toType).convert(decimalValue);
     }
 }
